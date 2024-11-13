@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owners</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            margin: 50px auto;
+            text-align: center;
+        }
+        h1 {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 16px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .cta {
+            font-size: 18px;
+            color: #007bff;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 18px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>All Owners</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Birth Date</th>
+            <th>Gender</th>
+            <th>Vehicles</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Thymeleaf: Loop through each owner and display in the table -->
+        <tr th:each="owner : ${owners}">
+            <td th:text="${owner.id}"></td>
+            <td th:text="${owner.name}"></td>
+            <td th:text="${owner.birthDate}"></td>
+            <td th:text="${owner.gender}"></td>
+
+            <!-- Display vehicles associated with the owner -->
+            <td>
+                <ul>
+                    <li th:each="vehicle : ${owner.vehicles}" th:text="${vehicle.model}"></li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Button to go back to the Vehicle page -->
+    <div class="button-container">
+        <a href="/vehicles" class="button">Go to Vehicles</a>
+    </div>
+</div>
+
+</body>
+</html>

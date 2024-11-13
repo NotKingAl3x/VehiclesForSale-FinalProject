@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .welcome-container {
+            margin-top: 100px;
+        }
+        .welcome-message {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .cta {
+            font-size: 18px;
+            color: #007bff;
+        }
+        /* Button container for positioning */
+        .button-container {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Space between the buttons */
+        }
+        .button {
+            padding: 15px 30px;
+            font-size: 18px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none; /* Remove underline for links */
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+<div class="welcome-container">
+    <h1 class="welcome-message">Welcome to the Owner & Vehicle Management System!</h1>
+    <p class="cta">To get started, navigate through the Owner and Vehicle sections to manage data.</p>
+</div>
+
+<!-- Button container -->
+<div class="button-container">
+    <a href="/owners" class="button">Owners</a>
+    <a href="/vehicles" class="button">Vehicles</a>
+</div>
+</body>
+</html>
