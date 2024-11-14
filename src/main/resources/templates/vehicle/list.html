@@ -1,19 +1,21 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Vehicle List</title>
 </head>
 <body>
 <h1>Vehicle List</h1>
-<a href="/vehicle/create">Add New Vehicle</a>
-<table border="1">
+<table>
     <thead>
     <tr>
         <th>ID</th>
         <th>VIN</th>
-        <th>Make</th>
         <th>Model</th>
-        <th>Type</th>
+        <th>Vehicle Type</th>
+        <th>Year</th>
+        <th>Manufacturer</th>
+        <th>Color</th>
         <th>Owner</th>
         <th>Actions</th>
     </tr>
@@ -22,17 +24,20 @@
     <tr th:each="vehicle : ${vehicles}">
         <td th:text="${vehicle.id}"></td>
         <td th:text="${vehicle.vin}"></td>
-        <td th:text="${vehicle.manufacturer}"></td>
         <td th:text="${vehicle.model}"></td>
-        <td th:text="${vehicle.type}"></td>
+        <td th:text="${vehicle.vehicleType}"></td>
+        <td th:text="${vehicle.productionYear}"></td>
+        <td th:text="${vehicle.manufacturer}"></td>
+        <td th:text="${vehicle.color}"></td>
         <td th:text="${vehicle.owner.name}"></td>
         <td>
-            <a th:href="@{/vehicle/details/{id}(id=${vehicle.id})}">Details</a>
-            <a th:href="@{/vehicle/update/{id}(id=${vehicle.id})}">Edit</a>
-            <a th:href="@{/vehicle/delete/{id}(id=${vehicle.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+            <a th:href="@{'/vehicles/' + ${vehicle.id}}">Details</a>
+            <a th:href="@{'/vehicles/update/' + ${vehicle.id}}">Update</a>
+            <a th:href="@{'/vehicles/delete/' + ${vehicle.id}}">Delete</a>
         </td>
     </tr>
     </tbody>
 </table>
+<a href="/vehicles/create">Create New Vehicle</a>
 </body>
 </html>

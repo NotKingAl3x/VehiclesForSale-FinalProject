@@ -1,33 +1,37 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Create Insurance</title>
 </head>
 <body>
-<h1>Create Insurance Policy</h1>
-<form th:action="@{/insurance/save}" th:object="${insurance}" method="post">
-    <label>Policy Number:</label>
-    <input type="text" th:field="*{policyNumber}" required />
-    <br/>
-    <label>Provider:</label>
-    <input type="text" th:field="*{provider}" required />
-    <br/>
-    <label>Coverage Amount:</label>
-    <input type="text" th:field="*{coverageAmount}" required />
-    <br/>
-    <label>Start Date:</label>
-    <input type="date" th:field="*{startDate}" required />
-    <br/>
-    <label>End Date:</label>
-    <input type="date" th:field="*{endDate}" required />
-    <br/>
-    <label>Vehicles:</label>
-    <select multiple th:field="*{vehicles}">
-        <option th:each="vehicle : ${vehicles}" th:value="${vehicle.id}" th:text="${vehicle.make + ' ' + vehicle.model + ' (' + vehicle.vin + ')'}"></option>
+<h1>Create Insurance</h1>
+<form action="#" th:action="@{/insurances}" th:object="${insurance}" method="post">
+    <label for="policyNumber">Policy Number:</label>
+    <input type="text" id="policyNumber" th:field="*{policyNumber}" required><br>
+
+    <label for="provider">Provider:</label>
+    <input type="text" id="provider" th:field="*{provider}" required><br>
+
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate" th:field="*{startDate}" required><br>
+
+    <label for="endDate">End Date:</label>
+    <input type="date" id="endDate" th:field="*{endDate}" required><br>
+
+    <label for="coverageAmount">Coverage Amount:</label>
+    <input type="number" id="coverageAmount" th:field="*{coverageAmount}" required><br>
+
+    <h2>Assign to Owners</h2>
+    <select multiple th:field="*{owners}">
+        <option th:each="owner : ${allOwners}"
+                th:value="${owner.id}"
+                th:text="${owner.name}">
+        </option>
     </select>
-    <br/>
-    <button type="submit">Save Insurance Policy</button>
+
+    <button type="submit">Save</button>
 </form>
-<a href="/insurance/list">Back to List</a>
+<a href="/insurances">Back to List</a>
 </body>
 </html>

@@ -39,12 +39,15 @@ public class Insurance {
     @ManyToMany(mappedBy = "insurances")
     private Set<Owner> owners;
 
-    @ManyToMany
-    @JoinTable(
-            name = "insurance_vehicle",
-            joinColumns = @JoinColumn(name = "insurance_id"),
-            inverseJoinColumns = @JoinColumn(name = "vehicle_id"))
+    @ManyToMany(mappedBy = "insurances")
     private Set<Vehicle> vehicles;
 
+    public Insurance(String policyNumber, String provider, LocalDate startDate, LocalDate endDate, Double coverageAmount) {
+        this.policyNumber = policyNumber;
+        this.provider = provider;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.coverageAmount = coverageAmount;
+    }
 
 }

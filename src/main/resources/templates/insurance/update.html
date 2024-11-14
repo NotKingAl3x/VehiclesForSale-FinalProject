@@ -1,27 +1,31 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Update Insurance</title>
 </head>
 <body>
-<h1>Update Insurance Policy</h1>
-<form th:action="@{/insurance/update}" th:object="${insurance}" method="post">
-    <input type="hidden" th:field="*{id}" />
+<h1>Update Insurance</h1>
+<form action="#" th:action="@{/insurances/update}" th:object="${insurance}" method="post">
+    <input type="hidden" th:field="*{id}"/>
 
-    <label>Policy Number:</label>
-    <input type="text" th:field="*{policyNumber}" required />
-    <br/>
-    <label>Provider:</label>
-    <input type="text" th:field="*{provider}" required />
-    <br/>
-    <label>Vehicles:</label>
-    <select multiple th:field="*{vehicles}">
-        <option th:each="vehicle : ${vehicles}" th:value="${vehicle.id}" th:text="${vehicle.make + ' ' + vehicle.model + ' (' + vehicle.vin + ')'}"
-                th:selected="${insurance.vehicles.contains(vehicle)}"></option>
-    </select>
-    <br/>
-    <button type="submit">Update Insurance Policy</button>
+    <label for="policyNumber">Policy Number:</label>
+    <input type="text" id="policyNumber" th:field="*{policyNumber}" required><br>
+
+    <label for="provider">Provider:</label>
+    <input type="text" id="provider" th:field="*{provider}" required><br>
+
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate" th:field="*{startDate}" required><br>
+
+    <label for="endDate">End Date:</label>
+    <input type="date" id="endDate" th:field="*{endDate}" required><br>
+
+    <label for="coverageAmount">Coverage Amount:</label>
+    <input type="number" id="coverageAmount" th:field="*{coverageAmount}" required><br>
+
+    <button type="submit">Update</button>
 </form>
-<a href="/insurance/list">Back to List</a>
+<a href="/insurances">Back to List</a>
 </body>
 </html>

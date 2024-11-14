@@ -22,11 +22,11 @@ public class Vehicle {
     @Column(unique = true, nullable = false)
     private String vin;
 
-    @Column(name = "type" , nullable = false)
-    private String type;
+    @Column(nullable = false)
+    private String vehicleType;
 
-    @Column(name = "year" ,nullable = false)
-    private Integer year;
+    @Column(nullable = false)
+    private Integer productionYear;
 
     @Column(nullable = false)
     private String manufacturer;
@@ -41,6 +41,31 @@ public class Vehicle {
     @JoinColumn(name = "owner_id")
     private Owner owner;
 
+    @ManyToMany
+    @JoinTable(
+            name = "vehicle_insurance",
+            joinColumns = @JoinColumn(name = "vehicle_id"),
+            inverseJoinColumns = @JoinColumn(name = "insurance_id")
+    )
+    private Set<Insurance> insurances;
 
+    public Vehicle(String vin, String vehicleType, Integer productionYear, String manufacturer, String model, String color) {
+        this.vin = vin;
+        this.vehicleType = vehicleType;
+        this.productionYear = productionYear;
+        this.manufacturer = manufacturer;
+        this.model = model;
+        this.color = color;
 
+    }
+
+    public Vehicle(String vin, String vehicleType, Integer productionYear, String manufacturer, String model, String color, Owner owner) {
+        this.vin = vin;
+        this.vehicleType = vehicleType;
+        this.productionYear = productionYear;
+        this.manufacturer = manufacturer;
+        this.model = model;
+        this.color = color;
+        this.owner = owner;
+    }
 }
