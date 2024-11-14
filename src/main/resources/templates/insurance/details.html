@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Insurance Policy Details</title>
+</head>
+<body>
+<h1>Insurance Policy Details</h1>
+<p><strong>Policy Number:</strong> <span th:text="${insurance.policyNumber}"></span></p>
+<p><strong>Provider:</strong> <span th:text="${insurance.provider}"></span></p>
+
+<h2>Vehicles Covered</h2>
+<ul>
+    <li th:each="vehicle : ${insurance.vehicles}">
+        <span th:text="${vehicle.make} + ' ' + ${vehicle.model}"></span> (VIN: <span th:text="${vehicle.vin}"></span>)
+    </li>
+</ul>
+
+<a href="/insurance/list">Back to List</a>
+</body>
+</html>

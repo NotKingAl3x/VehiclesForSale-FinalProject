@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cars for Sale Project</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header>
+    <h1>Car Sales Management</h1>
+    <nav>
+        <a th:href="@{/vehicle/list}">Vehicles</a> |
+        <a th:href="@{/owner/list}">Owners</a> |
+        <a th:href="@{/insurance/list}">Insurances</a>
+    </nav>
+</header>
+<main>
+    <section th:replace="${content}"></section>
+</main>
+</body>
+</html>

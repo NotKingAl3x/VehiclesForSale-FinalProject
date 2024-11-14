@@ -1,8 +1,8 @@
 package ro.itschool.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ro.itschool.entity.Owner;
 import ro.itschool.exception.OwnerNotFoundException;
@@ -10,56 +10,65 @@ import ro.itschool.service.OwnerService;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/owner")
 @RequiredArgsConstructor
 public class OwnerController {
 
     private final OwnerService ownerService;
 
-    // Create Owner
-    @PostMapping
-    public ResponseEntity<Owner> createOwner(@RequestBody Owner owner){
-        if (owner.getId() != null && ownerService.getOwnerById(owner.getId()).isPresent()) {
-            throw new OwnerNotFoundException("Owner with ID " + owner.getId() + " already exists");
-        }
-        Owner createdOwner = ownerService.saveOwner(owner);
-        return new ResponseEntity<>(createdOwner, HttpStatus.CREATED);
-    }
-
-    // Update Owner
-    @PutMapping("/{id}")
-    public ResponseEntity<Owner> updateOwner(@PathVariable Integer id, @RequestBody Owner owner) {
-        if (!ownerService.getOwnerById(id).isPresent()) {
-            throw new OwnerNotFoundException("Owner with ID " + id + " doesn't exist");
-        }
-        owner.setId(id); // Ensure the ID from path variable is used for the update
-        Owner updatedOwner = ownerService.updateOwner(owner);
-        return new ResponseEntity<>(updatedOwner, HttpStatus.OK);
-    }
-
-    // Get All Owners
-    @GetMapping
-    public ResponseEntity<List<Owner>> getAllOwners() {
+    // Get all owners
+    @GetMapping("/list")
+    public String listOwners(Model model) {
         List<Owner> owners = ownerService.getAllOwners();
-        return new ResponseEntity<>(owners, HttpStatus.OK);
+        model.addAttribute("owners", owners);
+        return "owner/list";
     }
 
-    // Get Owner by ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Owner> getOwnerById(@PathVariable Integer id) {
-        return ownerService.getOwnerById(id)
-                .map(owner -> new ResponseEntity<>(owner, HttpStatus.OK))
-                .orElseThrow(() -> new OwnerNotFoundException("Owner with ID " + id + " not found"));
+    // Get owner by id
+    @GetMapping("/details/{id}")
+    public String ownerDetails(@PathVariable Integer id, Model model) {
+        Owner owner = ownerService.getOwnerById(id)
+                .orElseThrow(() -> new OwnerNotFoundException("Owner not found"));
+        model.addAttribute("owner", owner);
+        return "owner/details";
     }
 
-    // Delete Owner by ID
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOwnerById(@PathVariable Integer id) {
-        if (!ownerService.getOwnerById(id).isPresent()) {
-            throw new OwnerNotFoundException("Owner with ID " + id + " not found");
-        }
+    // Create a new owner page
+    @GetMapping("/create")
+    public String createOwnerForm(Model model) {
+        model.addAttribute("owner", new Owner());
+        return "owner/create";
+    }
+
+    // Create Owner
+    @PostMapping("/save")
+    public String saveOwner(@ModelAttribute Owner owner) {
+        ownerService.saveOwner(owner);
+        return "redirect:/owner/list";
+    }
+
+    // Update owner page
+    @GetMapping("/update/{id}")
+    public String updateOwnerForm(@PathVariable Integer id, Model model) {
+        Owner owner = ownerService.getOwnerById(id)
+                .orElseThrow(() -> new OwnerNotFoundException("Owner not found"));
+        model.addAttribute("owner", owner);
+        return "owner/update";
+    }
+
+    // Update owner
+    @PostMapping("/update/{id}")
+    public String updateOwner(@PathVariable Integer id, @ModelAttribute Owner owner) {
+        owner.setId(id);
+        ownerService.updateOwner(owner);
+        return "redirect:/owner/list";
+    }
+
+    // Delete owner by id
+    @GetMapping("/delete/{id}")
+    public String deleteOwner(@PathVariable Integer id) {
         ownerService.deleteOwnerById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return "redirect:/owner/list";
     }
 }

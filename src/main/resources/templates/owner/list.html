@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Owner List</title>
+</head>
+<body>
+<h1>Owner List</h1>
+<a href="/owner/create">Create New Owner</a>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Date of Birth</th>
+        <th>Address</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="owner : ${owners}">
+        <td th:text="${owner.id}"></td>
+        <td th:text="${owner.name}"></td>
+        <td th:text="${owner.dateOfBirth}"></td>
+        <td th:text="${owner.address}"></td>
+        <td>
+            <a th:href="@{/owner/details/{id}(id=${owner.id})}">Details</a>
+            <a th:href="@{/owner/update/{id}(id=${owner.id})}">Edit</a>
+            <a th:href="@{/owner/delete/{id}(id=${owner.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

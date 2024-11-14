@@ -1,19 +1,14 @@
 package ro.itschool;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import ro.itschool.entity.Owner;
 import ro.itschool.entity.Vehicle;
-import ro.itschool.repository.OwnerRepository;
-import ro.itschool.repository.VehicleRepository;
 import ro.itschool.service.OwnerService;
 import ro.itschool.service.VehicleService;
-
 import java.time.LocalDate;
-import java.util.List;
 
 @SpringBootApplication
 public class Main {

@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -41,4 +42,12 @@ public class Owner {
         this.gender = gender;
     }
 
+
+    @ManyToMany
+    @JoinTable(
+            name = "OWNER_INSURANCE",
+            joinColumns = @JoinColumn(name = "owner_id"),
+            inverseJoinColumns = @JoinColumn(name = "insurance_id")
+    )
+    private Set<Insurance> insurances;
 }

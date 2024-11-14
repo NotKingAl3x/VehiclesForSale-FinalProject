@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Vehicle</title>
+</head>
+<body>
+<h1>Create Vehicle</h1>
+<form th:action="@{/vehicle/save}" th:object="${vehicle}" method="post">
+    <label>VIN:</label>
+    <input type="text" th:field="*{vin}" required />
+    <br/>
+    <label>Make:</label>
+    <input type="text" th:field="*{make}" required />
+    <br/>
+    <label>Model:</label>
+    <input type="text" th:field="*{model}" required />
+    <br/>
+    <label>Type:</label>
+    <input type="text" th:field="*{type}" required />
+    <br/>
+    <label>Year:</label>
+    <input type="number" th:field="*{year}" required />
+    <br/>
+    <label>Color:</label>
+    <input type="text" th:field="*{color}" required />
+    <br/>
+
+    <label>Owner:</label>
+    <select th:field="*{owner.id}" required>
+        <option th:each="owner : ${owners}" th:value="${owner.id}" th:text="${owner.name}">Select Owner</option>
+    </select>
+    <br/>
+
+    <h3>Insurance Policies</h3>
+    <ul>
+        <li th:each="insurance : ${insurances}">
+            <input type="checkbox" th:field="*{insurances}" th:value="${insurance.id}" />
+            <span th:text="${insurance.policyNumber} + ' - ' + ${insurance.provider}"></span>
+        </li>
+    </ul>
+
+    <button type="submit">Save Vehicle</button>
+</form>
+<a href="/vehicle/list">Back to List</a>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update Insurance</title>
+</head>
+<body>
+<h1>Update Insurance Policy</h1>
+<form th:action="@{/insurance/update}" th:object="${insurance}" method="post">
+    <input type="hidden" th:field="*{id}" />
+
+    <label>Policy Number:</label>
+    <input type="text" th:field="*{policyNumber}" required />
+    <br/>
+    <label>Provider:</label>
+    <input type="text" th:field="*{provider}" required />
+    <br/>
+    <label>Vehicles:</label>
+    <select multiple th:field="*{vehicles}">
+        <option th:each="vehicle : ${vehicles}" th:value="${vehicle.id}" th:text="${vehicle.make + ' ' + vehicle.model + ' (' + vehicle.vin + ')'}"
+                th:selected="${insurance.vehicles.contains(vehicle)}"></option>
+    </select>
+    <br/>
+    <button type="submit">Update Insurance Policy</button>
+</form>
+<a href="/insurance/list">Back to List</a>
+</body>
+</html>

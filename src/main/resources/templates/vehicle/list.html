@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Vehicle List</title>
+</head>
+<body>
+<h1>Vehicle List</h1>
+<a href="/vehicle/create">Add New Vehicle</a>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>VIN</th>
+        <th>Make</th>
+        <th>Model</th>
+        <th>Type</th>
+        <th>Owner</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="vehicle : ${vehicles}">
+        <td th:text="${vehicle.id}"></td>
+        <td th:text="${vehicle.vin}"></td>
+        <td th:text="${vehicle.make}"></td>
+        <td th:text="${vehicle.model}"></td>
+        <td th:text="${vehicle.type}"></td>
+        <td th:text="${vehicle.owner.name}"></td>
+        <td>
+            <a th:href="@{/vehicle/details/{id}(id=${vehicle.id})}">Details</a>
+            <a th:href="@{/vehicle/update/{id}(id=${vehicle.id})}">Edit</a>
+            <a th:href="@{/vehicle/delete/{id}(id=${vehicle.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

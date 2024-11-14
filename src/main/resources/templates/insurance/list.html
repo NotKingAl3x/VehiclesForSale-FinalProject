@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Insurance Policies List</title>
+</head>
+<body>
+<h1>Insurance Policies</h1>
+<a href="/insurance/create">Create New Insurance Policy</a>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Policy Number</th>
+        <th>Provider</th>
+        <th>Vehicles Covered</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="insurance : ${insurances}">
+        <td th:text="${insurance.id}"></td>
+        <td th:text="${insurance.policyNumber}"></td>
+        <td th:text="${insurance.provider}"></td>
+        <td>
+            <span th:each="vehicle : ${insurance.vehicles}" th:text="${vehicle.make + ' ' + vehicle.model + ' (' + vehicle.vin + ')'}"></span><br/>
+        </td>
+        <td>
+            <a th:href="@{/insurance/details/{id}(id=${insurance.id})}">Details</a>
+            <a th:href="@{/insurance/update/{id}(id=${insurance.id})}">Edit</a>
+            <a th:href="@{/insurance/delete/{id}(id=${insurance.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

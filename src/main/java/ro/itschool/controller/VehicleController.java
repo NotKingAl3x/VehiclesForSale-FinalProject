@@ -1,8 +1,8 @@
 package ro.itschool.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ro.itschool.entity.Vehicle;
 import ro.itschool.exception.VehicleNotFoundException;
@@ -10,63 +10,65 @@ import ro.itschool.service.VehicleService;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/vehicle")
 @RequiredArgsConstructor
 public class VehicleController {
 
     private final VehicleService vehicleService;
 
-    // Create Vehicle
-    @PostMapping
-    public ResponseEntity<Vehicle> createVehicle(Vehicle vehicle){
-        if(vehicle.getId() != null && vehicleService.getVehicleById(vehicle.getId()).isPresent()){
-            throw new VehicleNotFoundException("Vehicle with ID " + vehicle.getId() + " already exists");
-        }
-        Vehicle createdVehicle = vehicleService.saveVehicle(vehicle);
-        return new ResponseEntity<>(createdVehicle, HttpStatus.CREATED);
-    }
-
-    // Update Vehicle
-    @PutMapping("/{id}")
-    public ResponseEntity<Vehicle> updateVehicle(@PathVariable Integer id, @RequestBody Vehicle vehicle){
-        if(!vehicleService.getVehicleById(id).isPresent()){
-            throw new VehicleNotFoundException("Vehicle with ID " + id + " doesn't exist");
-        }
-        vehicle.setId(id);
-        Vehicle updatedVehicle = vehicleService.updateVehicle(vehicle);
-        return new ResponseEntity<>(updatedVehicle, HttpStatus.OK);
-    }
-
-    //Get All Vehicles
-    @GetMapping
-    public ResponseEntity<List<Vehicle>> getAllVehicles(){
+    // Get all vehicles
+    @GetMapping("/list")
+    public String listVehicles(Model model) {
         List<Vehicle> vehicles = vehicleService.getAllVehicles();
-        return new ResponseEntity<>(vehicles, HttpStatus.OK);
+        model.addAttribute("vehicles", vehicles);
+        return "vehicle/list";
     }
 
-    //Get Vehicle by ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Vehicle> getVehicleById(@PathVariable Integer id){
-        return vehicleService.getVehicleById(id)
-                .map(vehicle -> new ResponseEntity<>(vehicle, HttpStatus.OK))
-                .orElseThrow(() -> new VehicleNotFoundException("Vehicle with ID " + id + " not found"));
-    }
-    //Get Vehicle by VIN
-    @GetMapping("/{vin}")
-    public ResponseEntity<Vehicle> getVehicleByVin(@PathVariable String vin){
-        return vehicleService.getVehicleByVin(vin)
-                .map(vehicle -> new ResponseEntity<>(vehicle, HttpStatus.OK))
-                .orElseThrow(() -> new VehicleNotFoundException("Vehicle with ID " + vin + " not found"));
+    // Get vehicle by id
+    @GetMapping("/details/{id}")
+    public String vehicleDetails(@PathVariable Integer id, Model model) {
+        Vehicle vehicle = vehicleService.getVehicleById(id)
+                .orElseThrow(() -> new VehicleNotFoundException("Vehicle not found"));
+        model.addAttribute("vehicle", vehicle);
+        return "vehicle/details";
     }
 
-    //Delete Owner by ID
-    @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteVehicleById(@PathVariable Integer id){
-        if(!vehicleService.getVehicleById(id).isPresent()){
-            throw new VehicleNotFoundException("Vehicle with ID " + id + " not found");
-        }
+    // Create vehicle page
+    @GetMapping("/create")
+    public String createVehicleForm(Model model) {
+        model.addAttribute("vehicle", new Vehicle());
+        return "vehicle/create";
+    }
+
+    // Create vehicle
+    @PostMapping("/save")
+    public String saveVehicle(@ModelAttribute Vehicle vehicle) {
+        vehicleService.saveVehicle(vehicle);
+        return "redirect:/vehicle/list";
+    }
+
+    // Update vehicle page
+    @GetMapping("/update/{id}")
+    public String updateVehicleForm(@PathVariable Integer id, Model model) {
+        Vehicle vehicle = vehicleService.getVehicleById(id)
+                .orElseThrow(() -> new VehicleNotFoundException("Vehicle not found"));
+        model.addAttribute("vehicle", vehicle);
+        return "vehicle/update";
+    }
+
+    // Update vehicle
+    @PostMapping("/update/{id}")
+    public String updateVehicle(@PathVariable Integer id, @ModelAttribute Vehicle vehicle) {
+        vehicle.setId(id);
+        vehicleService.updateVehicle(vehicle);
+        return "redirect:/vehicle/list";
+    }
+
+    // Delete vehicle by id
+    @GetMapping("/delete/{id}")
+    public String deleteVehicle(@PathVariable Integer id) {
         vehicleService.deleteVehicleById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return "redirect:/vehicle/list";
     }
 }
