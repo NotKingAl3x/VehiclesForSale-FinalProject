@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -20,11 +22,11 @@ public class Vehicle {
     @Column(unique = true, nullable = false)
     private String vin;
 
-    @Column(name = "vehicle_type" , nullable = false)
-    private String vehicleType;
+    @Column(name = "type" , nullable = false)
+    private String type;
 
-    @Column(name = "production_year" ,nullable = false)
-    private Integer productionYear;
+    @Column(name = "year" ,nullable = false)
+    private Integer year;
 
     @Column(nullable = false)
     private String manufacturer;
@@ -38,4 +40,7 @@ public class Vehicle {
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private Owner owner;
+
+
+
 }

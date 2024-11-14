@@ -20,7 +20,7 @@
     <tr th:each="owner : ${owners}">
         <td th:text="${owner.id}"></td>
         <td th:text="${owner.name}"></td>
-        <td th:text="${owner.dateOfBirth}"></td>
+        <td th:text="${owner.birthDate}"></td>
         <td th:text="${owner.address}"></td>
         <td>
             <a th:href="@{/owner/details/{id}(id=${owner.id})}">Details</a>

@@ -21,8 +21,8 @@ public class Main {
     CommandLineRunner initData(OwnerService ownerService, VehicleService vehicleService) {
         return args -> {
 
-            Owner owner1 = new Owner("John Doe", LocalDate.of(1980, 5, 15), 'M');
-            Owner owner2 = new Owner("Jane Smith", LocalDate.of(1990, 7, 25), 'F');
+            Owner owner1 = new Owner("John Doe", LocalDate.of(1980, 5, 15), 'M',"Elm Street, House 21");
+            Owner owner2 = new Owner("Jane Smith", LocalDate.of(1990, 7, 25), 'F', "Houlley Valley Street, House 6");
 
             owner1 = ownerService.saveOwner(owner1);
             owner2 = ownerService.saveOwner(owner2);

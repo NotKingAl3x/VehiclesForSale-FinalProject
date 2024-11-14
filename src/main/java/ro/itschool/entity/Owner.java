@@ -31,17 +31,11 @@ public class Owner {
     @Column(nullable = false)
     private Character gender;
 
+    @Column(nullable = false)
+    private String address;
+
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Vehicle> vehicles;
-
-
-    // Custom constructor without id
-    public Owner(String name, LocalDate birthDate, Character gender) {
-        this.name = name;
-        this.birthDate = birthDate;
-        this.gender = gender;
-    }
-
 
     @ManyToMany
     @JoinTable(
@@ -50,4 +44,14 @@ public class Owner {
             inverseJoinColumns = @JoinColumn(name = "insurance_id")
     )
     private Set<Insurance> insurances;
+
+    // Custom constructor without id
+    public Owner(String name, LocalDate birthDate, Character gender, String address) {
+        this.name = name;
+        this.birthDate = birthDate;
+        this.gender = gender;
+        this.address = address;
+    }
+
+
 }

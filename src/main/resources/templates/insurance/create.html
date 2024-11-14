@@ -12,6 +12,15 @@
     <label>Provider:</label>
     <input type="text" th:field="*{provider}" required />
     <br/>
+    <label>Coverage Amount:</label>
+    <input type="text" th:field="*{coverageAmount}" required />
+    <br/>
+    <label>Start Date:</label>
+    <input type="date" th:field="*{startDate}" required />
+    <br/>
+    <label>End Date:</label>
+    <input type="date" th:field="*{endDate}" required />
+    <br/>
     <label>Vehicles:</label>
     <select multiple th:field="*{vehicles}">
         <option th:each="vehicle : ${vehicles}" th:value="${vehicle.id}" th:text="${vehicle.make + ' ' + vehicle.model + ' (' + vehicle.vin + ')'}"></option>
