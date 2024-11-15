@@ -52,4 +52,5 @@ public class VehicleService {
         vehicleRepository.deleteById(id);
     }
 
+
 }

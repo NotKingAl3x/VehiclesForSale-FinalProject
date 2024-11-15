@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Welcome</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<h1>Welcome to the Application</h1>
-<ul>
-    <li><a href="/owners">Owners</a></li>
-    <li><a href="/vehicles">Vehicles</a></li>
-    <li><a href="/insurances">Insurances</a></li>
-</ul>
+<h1>Welcome to the Management System</h1>
+
+<div class="navigation">
+    <a th:href="@{/owner}" class="button">Go to Owners</a>
+    <a th:href="@{/vehicle}" class="button">Go to Vehicles</a>
+    <a th:href="@{/insurance}" class="button">Go to Insurances</a>
+</div>
 </body>
 </html>

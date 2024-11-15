@@ -17,13 +17,33 @@ public class InsuranceController {
 
     private final InsuranceService insuranceService;
 
-    // Get All Insurances
-    @GetMapping("/list")
-    public String listInsurances(Model model) {
+//    // Get All Insurances
+//    @GetMapping("/list")
+//    public String listInsurances(Model model) {
+//        List<Insurance> insurances = insuranceService.getAllInsurances();
+//        model.addAttribute("insurances", insurances);
+//        return "insurance/list";
+//    }
+
+    @GetMapping
+    public String listInsurances(
+            @RequestParam(required = false, defaultValue = "false") boolean onlyWithVehicles,
+            Model model) {
+
         List<Insurance> insurances = insuranceService.getAllInsurances();
+
+        if (onlyWithVehicles) {
+            insurances = insurances.stream()
+                    .filter(insurance -> !insurance.getVehicles().isEmpty())
+                    .toList();
+        }
+
         model.addAttribute("insurances", insurances);
+        model.addAttribute("onlyWithVehicles", onlyWithVehicles);
+
         return "insurance/list";
     }
+
 
     // View insurance by ID
     @GetMapping("/details/{id}")

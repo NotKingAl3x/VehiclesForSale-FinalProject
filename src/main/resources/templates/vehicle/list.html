@@ -1,21 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Vehicle List</title>
+    <title>Vehicles</title>
 </head>
 <body>
 <h1>Vehicle List</h1>
+
+<form th:action="@{/vehicle}" method="get">
+    <label>
+        <input type="checkbox" name="sortByYear"
+               th:checked="${sortByYear ? 'checked' : ''}" value="true" />
+        Sort by Year
+    </label>
+    <button type="submit">Apply</button>
+</form>
+
+
 <table>
     <thead>
     <tr>
         <th>ID</th>
         <th>VIN</th>
         <th>Model</th>
-        <th>Vehicle Type</th>
+        <th>Type</th>
         <th>Year</th>
         <th>Manufacturer</th>
-        <th>Color</th>
         <th>Owner</th>
         <th>Actions</th>
     </tr>
@@ -25,19 +34,20 @@
         <td th:text="${vehicle.id}"></td>
         <td th:text="${vehicle.vin}"></td>
         <td th:text="${vehicle.model}"></td>
-        <td th:text="${vehicle.vehicleType}"></td>
-        <td th:text="${vehicle.productionYear}"></td>
+        <td th:text="${vehicle.type}"></td>
+        <td th:text="${vehicle.year}"></td>
         <td th:text="${vehicle.manufacturer}"></td>
-        <td th:text="${vehicle.color}"></td>
         <td th:text="${vehicle.owner.name}"></td>
         <td>
-            <a th:href="@{'/vehicles/' + ${vehicle.id}}">Details</a>
-            <a th:href="@{'/vehicles/update/' + ${vehicle.id}}">Update</a>
-            <a th:href="@{'/vehicles/delete/' + ${vehicle.id}}">Delete</a>
+            <a th:href="@{/vehicle/details/{id}(id=${vehicle.id})}">Details</a>
+            <a th:href="@{/vehicle/update/{id}(id=${vehicle.id})}">Update</a>
+            <a th:href="@{/vehicle/delete/{id}(id=${vehicle.id})}">Delete</a>
         </td>
     </tr>
     </tbody>
 </table>
-<a href="/vehicles/create">Create New Vehicle</a>
+
+<a th:href="@{/vehicles/create}">Create New Vehicle</a>
+<a th:href="@{/welcome}" class="button">Back to Home</a>
 </body>
 </html>

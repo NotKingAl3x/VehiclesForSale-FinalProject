@@ -8,6 +8,7 @@ import ro.itschool.entity.Vehicle;
 import ro.itschool.exception.VehicleNotFoundException;
 import ro.itschool.service.VehicleService;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -17,11 +18,26 @@ public class VehicleController {
 
     private final VehicleService vehicleService;
 
-    // Get all vehicles
-    @GetMapping("/list")
-    public String listVehicles(Model model) {
+//    // Get all vehicles
+//    @GetMapping("/list")
+//    public String listVehicles(Model model) {
+//        List<Vehicle> vehicles = vehicleService.getAllVehicles();
+//        model.addAttribute("vehicles", vehicles);
+//        return "vehicle/list";
+//    }
+
+    @GetMapping
+    public String listVehicles(@RequestParam(required = false) boolean sortByYear, Model model) {
         List<Vehicle> vehicles = vehicleService.getAllVehicles();
+
+        if (sortByYear) {
+            vehicles = vehicles.stream()
+                    .sorted(Comparator.comparingInt(Vehicle::getYear))
+                    .toList();
+        }
+
         model.addAttribute("vehicles", vehicles);
+        model.addAttribute("sortByYear", sortByYear); // Preserve the checkbox state
         return "vehicle/list";
     }
 
@@ -71,4 +87,6 @@ public class VehicleController {
         vehicleService.deleteVehicleById(id);
         return "redirect:/vehicle/list";
     }
+
+
 }

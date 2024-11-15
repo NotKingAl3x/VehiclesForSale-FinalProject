@@ -1,39 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Create Owner</title>
 </head>
 <body>
 <h1>Create Owner</h1>
-<form action="#" th:action="@{/owners}" th:object="${owner}" method="post">
+
+<form th:action="@{/owner/create}" method="post">
     <label for="name">Name:</label>
-    <input type="text" id="name" th:field="*{name}" required><br>
+    <input type="text" id="name" name="name" required /><br />
 
     <label for="address">Address:</label>
-    <input type="text" id="address" th:field="*{address}" required><br>
-
-    <label for="dateOfBirth">Date of Birth:</label>
-    <input type="date" id="dateOfBirth" th:field="*{dateOfBirth}" required><br>
+    <input type="text" id="address" name="address" required /><br />
 
     <label for="vehicles">Vehicles:</label>
-    <select multiple th:field="*{vehicles}">
-        <option th:each="vehicle : ${allVehicles}"
+    <select id="vehicles" name="vehicleIds" multiple>
+        <option th:each="vehicle : ${vehicles}"
                 th:value="${vehicle.id}"
-                th:text="${vehicle.vin + ' - ' + vehicle.model}">
-        </option>
-    </select><br>
-
-    <label for="insurances">Insurances:</label>
-    <select multiple th:field="*{insurances}">
-        <option th:each="insurance : ${allInsurances}"
-                th:value="${insurance.id}"
-                th:text="${insurance.policyNumber + ' - ' + insurance.provider}">
-        </option>
-    </select><br>
+                th:text="${vehicle.model} + ' (' + vehicle.vin + ')'"></option>
+    </select><br />
 
     <button type="submit">Save</button>
 </form>
-<a href="/owners">Back to List</a>
+
+<a th:href="@{/owners}">Back to List</a>
 </body>
 </html>

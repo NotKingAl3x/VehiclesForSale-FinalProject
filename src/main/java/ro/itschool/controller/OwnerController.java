@@ -17,11 +17,26 @@ public class OwnerController {
 
     private final OwnerService ownerService;
 
-    // Get all owners
-    @GetMapping("/list")
-    public String listOwners(Model model) {
+//    // Get all owners
+//    @GetMapping("/list")
+//    public String listOwners(Model model) {
+//        List<Owner> owners = ownerService.getAllOwners();
+//        model.addAttribute("owners", owners);
+//        return "owner/list";
+//    }
+
+    @GetMapping
+    public String listOwners(@RequestParam(required = false) boolean onlyWithVehicles, Model model) {
         List<Owner> owners = ownerService.getAllOwners();
+
+        if (onlyWithVehicles) {
+            owners = owners.stream()
+                    .filter(owner -> !owner.getVehicles().isEmpty())
+                    .toList();
+        }
+
         model.addAttribute("owners", owners);
+        model.addAttribute("onlyWithVehicles", onlyWithVehicles); // Preserve the checkbox state
         return "owner/list";
     }
 
